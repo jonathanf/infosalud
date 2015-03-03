@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+<!--
+        <record model="ir.ui.view" id="patient.visit.form.inherit">
+            <field name="name">patient.visit.form.inherit</field>
+            <field name="model">patient</field>
+            <field name="inherit_id" ref="patient.patient_form"/>
+            <field name="arch" type="xml">
+
+            </field>
+        </record>
+-->
+    </data>
+</openerp>

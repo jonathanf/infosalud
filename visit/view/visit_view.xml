@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Visit section -->
+
+        <record model="ir.ui.view" id="visit_tree">
+            <field name="name">visit.tree</field>
+            <field name="model">visit</field>
+            <field name="arch" type="xml">
+                <tree string="Visit">
+                    <field name="name"/>
+                    <field name="starts"/>
+                    <field name="duration"/>
+                    <field name="ends"/>
+                    <field name="patient_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="visit_form">
+            <field name="name">visit.form</field>
+            <field name="model">visit</field>
+            <field name="arch" type="xml">
+                <form string="Visit">
+                    <sheet>
+                        <div class="oe_title">
+                            <group col="2">
+                                <field name="name"/>
+                                <field name="starts"/>
+                                <field name="consultingroom_id" on_change="onchange_consulting_room(starts, consultingroom_id)"/>
+                                <field name="duration"/>
+                                <field name="ends"/>
+                            </group>
+                            <label for="patient_id" class="oe_edit_only"/>
+                            <h1><field name="patient_id"/></h1>
+
+                        </div>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="visit_search">
+            <field name="name">visit.search</field>
+            <field name="model">visit</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" string="Visit code"/>
+                    <field name="starts"/>
+                    <field name="duration"/>
+                    <field name="ends"/>
+                    <field name="patient_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="visit_calendar">
+            <field name="name">visit.calendar</field>
+            <field name="model">visit</field>
+            <field name="arch" type="xml">
+                <calendar string="Visit calendar"
+                        date_start="starts"
+                        date_stop="ends"
+                        color="consultingroom_id">
+                    <field name="patient_id"/>
+                </calendar>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="visit_action">
+            <field name="name">Visits</field>
+            <field name="res_model">visit</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new patient visit.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="visit_action" parent="patient.patient_top_menu" name="Visit calendar" id="visit_menu"/>
+
+        <!-- Consulting room section -->
+
+        <record model="ir.ui.view" id="consulting_room_tree">
+            <field name="name">consulting.room.tree</field>
+            <field name="model">consulting.room</field>
+            <field name="arch" type="xml">
+                <tree string="Consulting room">
+                    <field name="name"/>
+                    <field name="duration"/>
+                    <field name="price"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="consulting_room_form">
+            <field name="name">consulting.room.form</field>
+            <field name="model">consulting.room</field>
+            <field name="arch" type="xml">
+                <form string="Consulting room">
+                    <sheet>
+                        <div class="oe_title">
+                            <group col="2">
+                                <field name="name"/>
+                                <field name="duration"/>
+                                <field name="price"/>
+                                <field name="address"/>
+                            </group>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="consulting_room_search">
+            <field name="name">consulting.room.search</field>
+            <field name="model">consulting.room</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="consulting_room_action">
+            <field name="name">Consulting room</field>
+            <field name="res_model">consulting.room</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new consulting room.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="consulting_room_action" parent="patient.config_menu" name="Consulting rooms" id="consulting_room_menu"/>
+
+    </data>
+</openerp>
