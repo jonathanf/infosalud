@@ -66,7 +66,8 @@ class Patient(osv.osv):
 
                 diff = relativedelta(ends, start)
                 age = '%sy %sm' % (diff.years, diff.months)
-            res = {item: age}
+            res[item] = age
+        print res
         return res
 
     def _compose_name(self, cr, uid, ids, context=None):

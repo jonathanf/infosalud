@@ -107,9 +107,10 @@
                         <div class="oe_title">
                             <group col="2">
                                 <field name="name"/>
+                                <field name="default"/>
                                 <field name="duration"/>
                                 <field name="price"/>
-                                <field name="address"/>
+                                <field name="address" colspan="2"/>
                             </group>
                         </div>
                     </sheet>

@@ -41,6 +41,9 @@ class Visit(osv.osv):
         ('assisted', 'Assisted'),
     ]
 
+    def _default_room(self, cr, uid, id, context=None):
+        return 1
+
     def check_duration(self, cr, uid, id, context=None):
         """
         Check the consistency of the visit duration
@@ -100,7 +103,10 @@ class Visit(osv.osv):
         'state': fields.selection(_states, 'State')
     }
 
-    _defaults = {}
+    _defaults = {
+        'consultingroom_id': _default_room,
+
+    }
 
 
 class ConsultingRoom(osv.osv):
@@ -115,4 +121,5 @@ class ConsultingRoom(osv.osv):
         'price': fields.float('Price',
                               help='Standard consultation fee'),
         'address': fields.text('Address'),
+        'default': fields.boolean('Default', help='Set as default consulting room'),
     }
