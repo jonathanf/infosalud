@@ -11,8 +11,7 @@
                 <tree string="Visit">
                     <field name="name"/>
                     <field name="starts"/>
-                    <field name="duration"/>
-                    <field name="ends"/>
+                    <field name="duration" widget="float_time"/>
                     <field name="patient_id"/>
                 </tree>
             </field>
@@ -28,9 +27,8 @@
                             <group col="2">
                                 <field name="name"/>
                                 <field name="starts"/>
-                                <field name="consultingroom_id" on_change="onchange_consulting_room(starts, consultingroom_id)"/>
-                                <field name="duration"/>
-                                <field name="ends"/>
+                                <field name="consultingroom_id" on_change="onchange_consulting_room(consultingroom_id)"/>
+                                <field name="duration" widget="float_time"/>
                             </group>
                             <label for="patient_id" class="oe_edit_only"/>
                             <h1><field name="patient_id"/></h1>
@@ -49,8 +47,7 @@
                 <search>
                     <field name="name" string="Visit code"/>
                     <field name="starts"/>
-                    <field name="duration"/>
-                    <field name="ends"/>
+                    <field name="duration" widget="float_time"/>
                     <field name="patient_id"/>
                 </search>
             </field>
@@ -62,7 +59,7 @@
             <field name="arch" type="xml">
                 <calendar string="Visit calendar"
                         date_start="starts"
-                        date_stop="ends"
+                        date_delay="duration"
                         color="consultingroom_id">
                     <field name="patient_id"/>
                 </calendar>
@@ -92,7 +89,7 @@
             <field name="arch" type="xml">
                 <tree string="Consulting room">
                     <field name="name"/>
-                    <field name="duration"/>
+                    <field name="duration" widget="float_time"/>
                     <field name="price"/>
                 </tree>
             </field>
@@ -108,7 +105,7 @@
                             <group col="2">
                                 <field name="name"/>
                                 <field name="default"/>
-                                <field name="duration"/>
+                                <field name="duration" widget="float_time"/>
                                 <field name="price"/>
                                 <field name="address" colspan="2"/>
                             </group>

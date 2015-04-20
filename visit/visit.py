@@ -42,6 +42,10 @@ class Visit(osv.osv):
     ]
 
     def _default_room(self, cr, uid, id, context=None):
+        consulroom_obj = self.pool.get('consulting.room')
+        room = consulroom_obj.search(cr, uid, [('default', '=', '1')])
+        if room:
+            return room[0]
         return 1
 
     def check_duration(self, cr, uid, id, context=None):
@@ -55,18 +59,7 @@ class Visit(osv.osv):
         """
         return {}
 
-    def set_duration(self, cr, uid, id, context=None):
-        """
-        Set/change the visit duration
-        :param cr:
-        :param uid:
-        :param id:
-        :param context:
-        :return:
-        """
-        return {}
-
-    def onchange_consulting_room(self, cr, uid, id, starts, consulting_room, context=None):
+    def onchange_consulting_room(self, cr, uid, id, consulting_room, context=None):
         """
 
         :param cr:
@@ -77,26 +70,24 @@ class Visit(osv.osv):
         :param context:
         :return:
         """
+        if consulting_room:
+            consulroom_obj = self.pool.get('consulting.room')
+            duration = consulroom_obj.browse(cr, uid, consulting_room, context=context)[0].duration
+        else:
+            duration = 0.0
+
         vals = {
             'value': {
-                'duration': 0,
-                'ends': starts,
+                'duration': duration,
             }
         }
         return vals
 
-    def onchange_duration(self, cr, uid, id, starts, duration, context=None):
-        return {}
-
-    def onchange_ends(self, cr, uid, id, ends, context=None):
-        return {}
-
     _columns = {
         'name': fields.char('Identifier'),
         'starts': fields.datetime('Start date'),
-        'ends': fields.datetime('End date'),
-        'duration': fields.integer('Duration',
-                                   help='Duration in minutes'),
+        'duration': fields.float('Duration',
+                                 help='Duration in minutes'),
         'patient_id': fields.many2one('patient', 'Patient'),
         'consultingroom_id': fields.many2one('consulting.room',
                                               'Consulting room'),
@@ -105,7 +96,6 @@ class Visit(osv.osv):
 
     _defaults = {
         'consultingroom_id': _default_room,
-
     }
 
 
@@ -116,7 +106,7 @@ class ConsultingRoom(osv.osv):
 
     _columns = {
         'name': fields.char('Name'),
-        'duration': fields.integer('Standard duration',
+        'duration': fields.float('Standard duration',
                                    help='Visit standard duration time in minutes'),
         'price': fields.float('Price',
                               help='Standard consultation fee'),
